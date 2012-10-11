@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTcpServer>
-#include <QTcpSocket>
 #include <QString>
+#include "connectionmanager.h"
+#include "logging.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,17 +18,27 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void onConnected();
 private slots:
     void on_checkBox_server_stateChanged(int checked);
 
+    void on_pushButton_connect_clicked();
+
+
+
+    void on_pushButton_listen_clicked();
+
+    void on_pushButton_send_clicked();
+
+    void on_pushButton_step_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QTcpServer* serverSocket;
-    QTcpSocket* clientSocket;
-    QString logString;
+
+    Logging* log;
+    ConnectionManager* connectionManager;
     bool serverMode;
-    bool connected;
-    bool listening;
 };
 
 #endif // MAINWINDOW_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>506</height>
+    <width>435</width>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
       <x>10</x>
       <y>410</y>
       <width>331</width>
-      <height>51</height>
+      <height>61</height>
      </rect>
     </property>
    </widget>
@@ -97,9 +97,9 @@
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>410</y>
+      <y>440</y>
       <width>91</width>
-      <height>51</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -129,7 +129,7 @@
      <string>Key</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_changeKey">
+   <widget class="QPushButton" name="pushButton_listen">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -139,7 +139,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Change Key</string>
+     <string>Listen</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_server">
@@ -155,13 +155,26 @@
      <string>Server</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_step">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>410</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Step</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>439</width>
+     <width>435</width>
      <height>20</height>
     </rect>
    </property>
