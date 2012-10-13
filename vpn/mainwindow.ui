@@ -17,60 +17,14 @@
    <widget class="QPushButton" name="pushButton_connect">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>30</y>
-      <width>141</width>
-      <height>41</height>
+      <x>270</x>
+      <y>60</y>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Connect</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_host">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>0</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_host">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>31</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Host</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_port">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>31</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Port</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_port">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser">
@@ -89,52 +43,32 @@
       <x>10</x>
       <y>410</y>
       <width>331</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="tabChangesFocus">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_send">
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>440</y>
+      <y>410</y>
       <width>91</width>
-      <height>31</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>Send</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_key">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>60</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_key">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>31</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Key</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_listen">
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>70</y>
-      <width>121</width>
+      <y>60</y>
+      <width>131</width>
       <height>31</height>
      </rect>
     </property>
@@ -145,7 +79,7 @@
    <widget class="QCheckBox" name="checkBox_server">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>310</x>
       <y>0</y>
       <width>87</width>
       <height>21</height>
@@ -158,16 +92,83 @@
    <widget class="QPushButton" name="pushButton_step">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>410</y>
-      <width>91</width>
+      <x>270</x>
+      <y>20</y>
+      <width>131</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Step</string>
+     <string>Step through Connect</string>
     </property>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>241</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_connectionInfo">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_host">
+       <property name="text">
+        <string>Host</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPlainTextEdit" name="plainTextEdit_host">
+       <property name="tabChangesFocus">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_port">
+       <property name="text">
+        <string>Port</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPlainTextEdit" name="plainTextEdit_port">
+       <property name="tabChangesFocus">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_key">
+       <property name="text">
+        <string>Key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPlainTextEdit" name="plainTextEdit_key">
+       <property name="tabChangesFocus">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>pushButton_listen</zorder>
+   <zorder>pushButton_connect</zorder>
+   <zorder>plainTextEdit_host</zorder>
+   <zorder>label_host</zorder>
+   <zorder>label_port</zorder>
+   <zorder>plainTextEdit_port</zorder>
+   <zorder>textBrowser</zorder>
+   <zorder>plainTextEdit_message</zorder>
+   <zorder>pushButton_send</zorder>
+   <zorder>plainTextEdit_key</zorder>
+   <zorder>label_key</zorder>
+   <zorder>checkBox_server</zorder>
+   <zorder>pushButton_step</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -175,7 +176,7 @@
      <x>0</x>
      <y>0</y>
      <width>435</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

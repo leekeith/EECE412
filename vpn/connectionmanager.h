@@ -28,10 +28,12 @@ public:
     //Client Functions
 
     void connectToServer(QString host, int port);
-    bool disconnect();
+    void disconnect();
 
 
-    bool send(QString message, bool serverMode);
+    bool send(QString message);
+
+    void writeTCPConnectionStatus();
 
 signals:
     // Server mode auto calls this when a client connects to its listening port
@@ -43,6 +45,8 @@ signals:
 
 public slots:
     void onReceiveNewConnection();
+    void onReceiveNewMessage();
+
 private slots:
     void connectedTCPSocket();
     void disconnectedTCPSocket();
@@ -54,7 +58,6 @@ private:
     //State variables
     // TCPServer opens a port to listen for incoming tcp requests
     QTcpServer* serverListener;
-    QTcpSocket* serverSocket;
 
     // TCPSockets actually establish a connection with other ports
     QTcpSocket* connectionSocket;

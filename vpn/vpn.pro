@@ -16,10 +16,12 @@ QMAKE_CXXFLAGS += -std=c++0x
 SOURCES += main.cpp\
         mainwindow.cpp \
     connectionmanager.cpp \
-    logging.cpp
+    logging.cpp \
+    encryptionhelper.cpp
 
 HEADERS  += mainwindow.h \
     connectionmanager.h \
-    logging.h
+    logging.h \
+    encryptionhelper.h
 
 FORMS    += mainwindow.ui

@@ -10,6 +10,7 @@ ConnectionManager::ConnectionManager(QObject *parent, Logging* log) :
     connect(connectionSocket, SIGNAL(hostFound()), this, SLOT(hostFoundTCPSocket()));
     connect(connectionSocket, SIGNAL(connected()), this, SLOT(connectedTCPSocket()));
     connect(connectionSocket, SIGNAL(disconnected()), this, SLOT(disconnectedTCPSocket()));
+    connect(connectionSocket, SIGNAL(readyRead()), this, SLOT(onReceiveNewMessage()));
     this->log = log;
 }
 
@@ -31,8 +32,10 @@ bool ConnectionManager::listen(int port) {
         log->write("Failed to start listening");
         log->write(serverListener->errorString());
         qDebug() << serverListener->errorString();
+        return false;
     } else {
         log->write("Started listening");
+        return true;
     }
 }
 
@@ -42,26 +45,21 @@ void ConnectionManager::stopListen() {
     }
 }
 
-bool ConnectionManager::send(QString message, bool serverMode) {
+bool ConnectionManager::send(QString message) {
     int result;
-    if (serverMode) {
-        result = serverSocket->write(message.toAscii());
-    } else {
-        result = connectionSocket->write(message.toAscii());
-    }
+
+    result = connectionSocket->write(message.toAscii());
+
     if (result < 0) {
         log->write("Failed to send");
         return false;
     } else {
-        log->write("Sent");
+        log->write("Sent: " + message);
         return true;
     }
 }
 
-bool ConnectionManager::disconnect() {
-    if (!connectionSocket->state() != QAbstractSocket::UnconnectedState) {
-        connectionSocket->disconnectFromHost();
-    }
+void ConnectionManager::disconnect() {
     if (!connectionSocket->state() != QAbstractSocket::UnconnectedState) {
         connectionSocket->disconnectFromHost();
     }
@@ -72,6 +70,8 @@ void ConnectionManager::hostFoundTCPSocket() {
 }
 
 void ConnectionManager::connectedTCPSocket() {
+    log->write("TCP Socket Connected!");
+    this->writeTCPConnectionStatus();
     emit isConnected();
 }
 
@@ -80,8 +80,26 @@ void ConnectionManager::disconnectedTCPSocket() {
 }
 
 void ConnectionManager::onReceiveNewConnection() {
-    log->write("New connection");
-    serverSocket = serverListener->nextPendingConnection();
-    serverSocket->write("connected!\r\n");
-    serverSocket->flush();
+    // When receiving a new connection, delete old connection first
+    this->disconnect();
+    delete connectionSocket;
+
+    connectionSocket = serverListener->nextPendingConnection();
+    connect(connectionSocket, SIGNAL(hostFound()), this, SLOT(hostFoundTCPSocket()));
+    connect(connectionSocket, SIGNAL(connected()), this, SLOT(connectedTCPSocket()));
+    connect(connectionSocket, SIGNAL(disconnected()), this, SLOT(disconnectedTCPSocket()));
+    connect(connectionSocket, SIGNAL(readyRead()), this, SLOT(onReceiveNewMessage()));
+    log->write("New connection from: " + connectionSocket->peerAddress().toString());
+    this->writeTCPConnectionStatus();
+}
+
+void ConnectionManager::onReceiveNewMessage() {
+    QString receivedMessage = connectionSocket->readAll();
+    log->write("Receieved: " + receivedMessage);
+}
+
+void ConnectionManager::writeTCPConnectionStatus() {
+    log->write("Local Address: " + connectionSocket->localAddress().toString() + ":" +
+               QString::number(connectionSocket->localPort()) + ", Peer Address: " +
+               connectionSocket->peerAddress().toString() + ":" + QString::number(connectionSocket->peerPort()));
 }

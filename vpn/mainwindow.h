@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QKeyEvent>
 #include "connectionmanager.h"
+#include "encryptionhelper.h"
 #include "logging.h"
 
 namespace Ui {
@@ -33,11 +35,15 @@ private slots:
 
     void on_pushButton_step_clicked();
 
+protected:
+    void keyPressEvent(QKeyEvent* event);
+
 private:
     Ui::MainWindow *ui;
 
     Logging* log;
     ConnectionManager* connectionManager;
+    EncryptionHelper* encryptionHelper;
     bool serverMode;
 };
 
