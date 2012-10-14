@@ -2,6 +2,7 @@
 #include<math.h>
 #include<vector>
 #include<limits.h>
+using namespace std;
 
 #define NUM_ITT 12
 
@@ -85,8 +86,13 @@ int main()
 			keyset[i][j]=149+i;
 		}
 	}
-
-	char* input="This line of text by Keith Lee to test FE";
+	cout<< "Enter text to be encrypted\n";
+	char* input;
+	char inputstring[256];
+	cin.getline(inputstring,256);
+	input = inputstring;
+	
+	//char* input="This line of text by Keith Lee to test FE";
 	char* output;
 	char plaintext[32];
 	char cyphertext[32];
