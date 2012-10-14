@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include "feistel.h"
 
 const int MAX_SECRET_INTEGER = 30;
 
@@ -26,4 +27,22 @@ unsigned long EncryptionHelper::generatePartialDiffieHelmanKey() {
     // Calculate g^a mod p, and store it for calculating the session key later.
     partialDiffieHelmanKey = ((unsigned long) std::pow((double)dhGenerator, secretInteger)) % dhPrime;
     return partialDiffieHelmanKey;
+}
+
+
+QString EncryptionHelper::encryptMessage(const QString& message) {
+
+    // encrypt message using symmetric key feistel cipher
+
+    // computer hash checksum using md5 / sha1 or something
+
+    return "dummy";
+}
+
+QString EncryptionHelper::decryptMessage(const QString& message) {
+    // decrypt message using symmetric key feistel cipher
+
+    // computer hash checksum of the message part, and compare the checksums for corruption
+
+    return "dummy";
 }

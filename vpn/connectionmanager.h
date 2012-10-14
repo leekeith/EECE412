@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 #include <QString>
 #include "logging.h"
+#include "encryptionhelper.h"
 
 namespace Ui {
 class ConnectionManager;
@@ -15,7 +16,7 @@ class ConnectionManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConnectionManager(QObject *parent = 0, Logging* log = 0);
+    explicit ConnectionManager(QObject *parent = 0, Logging* log = 0, EncryptionHelper* enc = 0);
 
     // For now, all functions blobbed up in here for server + client.
     // Possibly clean this up later.
@@ -54,7 +55,9 @@ private slots:
 
 private:
 
-
+    // Store state of encryption.
+    // READY = key established, ready to transmit securely.
+    enum cryptoState {IDLE, READY};
     //State variables
     // TCPServer opens a port to listen for incoming tcp requests
     QTcpServer* serverListener;
@@ -63,7 +66,8 @@ private:
     QTcpSocket* connectionSocket;
 
     Logging* log;
-
+    EncryptionHelper* encryptionHelper;
+    cryptoState state;
     QString hostname;
     int port;
     bool connected;

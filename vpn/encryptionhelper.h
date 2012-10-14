@@ -4,6 +4,7 @@
 #include <QObject>
 #include <random>
 #include "logging.h"
+#include <QString>
 
 // Class that contains encryption functions and state
 
@@ -16,6 +17,8 @@ public:
     // Put in encryption functions here
     unsigned long generatePartialDiffieHelmanKey();
 
+    QString encryptMessage(const QString& message);
+    QString decryptMessage(const QString& message);
 
 
 signals:

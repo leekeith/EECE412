@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     log(new Logging(this))
 {
     ui->setupUi(this);
-    connectionManager = new ConnectionManager(this, log);
-    encryptionHelper = new EncryptionHelper(this, log);
 
+    encryptionHelper = new EncryptionHelper(this, log);
+    connectionManager = new ConnectionManager(this, log, encryptionHelper);
     connect(connectionManager, SIGNAL(isConnected()), this, SLOT(onConnected()));
     // Connect log with GUI textOutput
     connect(log, SIGNAL(valueChanged(QString)), ui->textBrowser, SLOT(append(QString)));
@@ -102,11 +102,9 @@ void MainWindow::on_pushButton_send_clicked()
 {
     QString message = ui->plainTextEdit_message->toPlainText();
     ui->plainTextEdit_message->setPlainText("");
-
-
-    // TODO: Encrypt Message using session key, feistel cipher would go here. is it good enough?
-
-    connectionManager->send(message);
+    // encryption is handled in connectionManager
+    QString encryptedMessage = encryptionHelper->encryptMessage(message);
+    connectionManager->send(encryptedMessage);
 }
 
 void MainWindow::on_pushButton_step_clicked()

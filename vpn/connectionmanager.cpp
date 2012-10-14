@@ -1,7 +1,8 @@
 
 #include "connectionmanager.h"
 
-ConnectionManager::ConnectionManager(QObject *parent, Logging* log) :
+
+ConnectionManager::ConnectionManager(QObject *parent, Logging* log, EncryptionHelper* enc) :
     QObject(parent)
 {
     serverListener = new QTcpServer(this);
@@ -12,6 +13,8 @@ ConnectionManager::ConnectionManager(QObject *parent, Logging* log) :
     connect(connectionSocket, SIGNAL(disconnected()), this, SLOT(disconnectedTCPSocket()));
     connect(connectionSocket, SIGNAL(readyRead()), this, SLOT(onReceiveNewMessage()));
     this->log = log;
+    encryptionHelper = enc;
+    state = IDLE;
 }
 
 void ConnectionManager::connectToServer(QString host, int port) {
@@ -95,7 +98,14 @@ void ConnectionManager::onReceiveNewConnection() {
 
 void ConnectionManager::onReceiveNewMessage() {
     QString receivedMessage = connectionSocket->readAll();
-    log->write("Receieved: " + receivedMessage);
+
+    // use state machine to see which phase of protocol we are in
+
+    if (state == READY) {
+        // only when state is ready is the
+        QString decryptedMessage = encryptionHelper->decryptMessage(receivedMessage);
+        log->write("Receieved: " + decryptedMessage);
+    }
 }
 
 void ConnectionManager::writeTCPConnectionStatus() {

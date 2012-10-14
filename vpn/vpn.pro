@@ -22,6 +22,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     connectionmanager.h \
     logging.h \
-    encryptionhelper.h
+    encryptionhelper.h \
+    feistel.h
 
 FORMS    += mainwindow.ui
