@@ -56,6 +56,44 @@ void MainWindow::on_pushButton_connect_clicked()
         log->write("Error: Not in client mode!");
     } else {
         connectionManager->connectToServer(inputHostName, port);
+        QString challenge = encryptionHelper->generateRandom;
+        QString initMessage = feistel_encode("Client," + challenge);
+
+        connectionManager->send(initMessage);
+
+        //A little bit awkward, because connectionmanager also does the displaying
+        //Issue is all received messages including mutual authentication will be logged and displayed
+        connectionManager->onReceiveNewMessage();
+        QString message = feistel_decode(receivedMessage);
+
+        char * pch;
+        QString serverChallenge;
+        QString sessionKey;
+
+        for (int i = 0; i < 5; i++) {
+            pch = strtok(message, ',');
+            switch (i) {
+            case 0:
+                serverChallenge = pch;
+            case 1:
+                continue;
+                break;
+            case 2:
+                if (pch = challenge) {continue;}
+                else {}//Auth fail: incorrect challenge; possibly use states here
+                break;
+            case 3:
+                sessionKey; //This is g^b mod p: do g^ab mod p; add helper method once cpp file is updated
+                break;
+            case 4:
+                if (pch = inputPreSharedKey) {continue;}
+                else {}//Auth fail: incorred PreSharedKey; possibly use states here
+                break;
+            }
+        }
+
+        QString establishMessage = feistel_encode("Client," + serverChallenge + "," + sessionKey + "," + inputPreSharedKey);
+        connectionManager->send(establishMessage);
 
         // TODO: Mutual authenticate, Establish shared symmetric session key via DH key exchange
         // Implement as shown on slide 5
