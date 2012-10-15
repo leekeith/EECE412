@@ -38,16 +38,14 @@ void EncryptionHelper::config_DH(std::string password)
 {
 	for(int i=0;i<password.size();i++)
 	{
-		this->dhGenerator+=(password[i]+password[(3*i)%(password.size()-1)])/(i+1);
+		this->dhGenerator+=(password[i]+password[(2*i+1)%(password.size()-1)])/(i+1);
 	}
 	this->gen_p_DH_key();
 }
 
 void EncryptionHelper::gen_DH_key(unsigned long p_DH_key_recd)
 {
-	unsigned long otherNum;
-	otherNum=(log(p_DH_key_recd)/log(dhGenerator));
-	this->DH_Key=((unsigned long)(std::pow((long double)this->dhGenerator, this->secretInteger*otherNum)))%this->dhPrime;
+	this->DH_Key=((unsigned long)(std::pow((long double)p_DH_key_recd, this->secretInteger)))%this->dhPrime;
 }
 
 void EncryptionHelper::config_feis()
